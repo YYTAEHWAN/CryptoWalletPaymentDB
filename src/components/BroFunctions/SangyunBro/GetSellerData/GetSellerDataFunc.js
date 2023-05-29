@@ -69,35 +69,6 @@ export { getSellerData };
 
 /*
 
-
-
-
-// 3. 판매자 지갑 관리(판매자가 사용하기로 선택한 지갑 리스트를 보거나/삭제만 가능)
-function read_sellers_chosen_wallet( input_seller_id ) {
-    return sellersChosenWalletDB.read_sellers_chosen_wallet( input_seller_id ); // 선택한 지갑 번호(idx) 리스트 리턴
-}
-function delete_sellers_chosen_wallet( input_seller_id, input_crypto_wallet_idx ) {
-    return sellersChosenWalletDB.delete_sellers_chosen_wallet( input_seller_id, input_crypto_wallet_idx ); // 1: 성공, -1: 실패
-}
-
-
-// 4. 블록체인 관리 
-// 4-1. 낭낭에서 사용 가능한 블록체인 조회/등록
-function read_main_blockchain_list() {
-    return mainBlockchainListDB.read_main_blockchain_list(); // 사용 가능한 블록체인 번호(idx) 리스트 리턴
-}
-function create_sellers_chosen_main_blockchain( input_seller_id, input_main_blockchain_idx ) {
-    return sellersChosenMainBlockchainDB.create_sellers_chosen_main_blockchain( input_seller_id, input_main_blockchain_idx ); // 1: 성공, -1: 실패
-}
-//4-2. 판매자 블록체인 관리(판매자가 사용하기로 선택한 블록체인 리스트를 보거나/삭제만 가능)
-function read_sellers_chosen_main_blockchain( input_seller_id ) {
-    return sellersChosenMainBlockchainDB.read_sellers_chosen_main_blockchain( input_seller_id ); // 선택한 블록체인 번호(idx) 리스트 리턴
-}
-function delete_sellers_chosen_main_blockchain( input_seller_id, input_main_blockchain_idx ) {
-    return sellersChosenMainBlockchainDB.delete_sellers_chosen_main_blockchain( input_seller_id, input_main_blockchain_idx ); // 1: 성공, -1: 실패
-}
-
-
 // 5. 결제 내역 (근데 이제 결제 기간을 곁들인...)
 // 이건 나중에 구현하자
 

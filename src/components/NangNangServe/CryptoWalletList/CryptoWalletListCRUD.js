@@ -101,6 +101,34 @@ const cryptoWalletListDB = {
         return null;
       }
   },
+
+    // 이건 아직 테스트 안해봄 이건 아직 테스트 안해봄 이건 아직 테스트 안해봄
+   // 인덱스를 넣으면 낭낭이 제공하는 크립토 월렛의 이름을 제공하는 함수
+   async readOneCryptoWalletName(walletIdx$) {
+    // 접근 db 이름 : nangnang_crypto_wallet_list
+    // 접근 db 칼럼 이름들 : idx[pk], name
+
+    try {
+      const cryptoWalletListRef = db.collection('nangnang_crypto_wallet_list');
+  
+      const snapshot = await cryptoWalletListRef.get();
+      
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+
+        const docName = doc.id;
+        const walletIdx = docName.split('_')[1];
+        if(`idx${walletIdx$}` === walletIdx) {
+          return data.name; // walletIdx$에 해당하는 크립토 월렛의 이름 리턴
+        }
+      });
+      console.log("해당하는 idx의 크립토 월렛 없음");
+      return -1; // 실패 해당하는 idx의 크립토 월렛 없음
+    } catch (error) {
+      console.error('데이터 읽기 실패:', error);
+      return -1;
+    }
+},
   
   // 낭낭이 제공하는 크립토 월렛 리스트를 수정하는 함수
   async updateCryptoWalletList( wallet_idx$ , modifiedCryptoWalletName) {

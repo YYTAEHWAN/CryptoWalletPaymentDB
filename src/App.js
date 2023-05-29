@@ -9,8 +9,11 @@ import SellersChosenWalletPage from './components/User/SellerData/Chosen/Wallet/
 import SellersChosenMainBlockchainPage from './components/User/SellerData/Chosen/Blockchain/SellersChosenMainBlockchainPage';
 import CryptoWalletListPage from './components/NangNangServe/CryptoWalletList/CryptoWalletListPage';
 import MainBlockchainListPage from './components/NangNangServe/MainBlockchainList/MainBlockchainListPage';
-import GetSellerDataPage from './components/BroFunctions/SangyunBro/First/GetSellerDataPage';
-import WalletAboutPage from './components/BroFunctions/SangyunBro/Second/WalletAboutPage';
+import GetSellerDataPage from './components/BroFunctions/SangyunBro/GetSellerData/GetSellerDataPage';
+import WalletAboutPage from './components/BroFunctions/SangyunBro/WalletOne/WalletAboutPage';
+import ChosenWalletPage from './components/BroFunctions/SangyunBro/WalletTwo/ChosenWalletPage';
+import ManageBcFuncsPage from './components/BroFunctions/SangyunBro/BlockchainOne/ManageBcFuncsPage';
+import ModifyBcFuncsPage from './components/BroFunctions/SangyunBro/BlockchainTwo/ModifyBcFuncsPage';
 
 function App() {
   return (
@@ -28,6 +31,9 @@ function App() {
           <Route path="MainBlockchainListPage" element={<MainBlockchainListPage />} />
           <Route path="GetSellerDataPage" element={<GetSellerDataPage />} />
           <Route path="WalletAboutPage" element={<WalletAboutPage />} />
+          <Route path="ChosenWalletPage" element={<ChosenWalletPage />} />
+          <Route path="ManageBcFuncsPage" element={<ManageBcFuncsPage />} />
+          <Route path="ModifyBcFuncsPage" element={<ModifyBcFuncsPage />} />
         </Routes>
       </BrowserRouter>
     </div>

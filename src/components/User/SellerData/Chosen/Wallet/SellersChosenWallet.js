@@ -16,7 +16,7 @@ function SellersChosenWallet() {
   };
 
   const handleRead = async () => {
-    const dataList = await sellersChosenWalletDB.readSellersChosenWallet(sellerId, cryptoWalletIdx);
+    const dataList = await sellersChosenWalletDB.readSellersChosenWallet(sellerId);
     if (dataList) {
       setSellersChosenWalletIdxList(dataList);
     } else {
