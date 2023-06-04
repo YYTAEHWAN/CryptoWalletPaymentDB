@@ -50,7 +50,7 @@ const productInfoDB = {
       // product_info 컬렉션에 새로운 문서 생성
       await productInfoRef.doc(productInfoIdx).set(productInfoData);
 
-      return productInfoIdx; // 성공: product_info_idx 문자열 리턴
+      return newIdxValue; // 성공: product_info_idx 문자열의 숫자값만 리턴
     } catch (error) {
       console.error("데이터 생성 실패:", error);
       return -1; // 실패

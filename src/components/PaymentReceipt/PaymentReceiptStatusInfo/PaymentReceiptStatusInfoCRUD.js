@@ -14,7 +14,7 @@ import { db } from '../../../services/firebaseAPI';
 //     payment_end_time varchar
 //   }
 
-const StatusInfoDB = {
+const statusInfoDB = {
     // 결제 영수증 상태 정보를 저장하는 함수
     async create() {
         // 접근 db table name: payment_receipt_status_info
@@ -156,8 +156,8 @@ const StatusInfoDB = {
         }
     },
 
-    // 결제 영수증의 완료 시점을 추가하는 함수
-    async updateEndTime(paymentReceiptIdx) {
+    // 결제 종료 시 종료된 시간을 기입하고, 해당 paymentReceiptIdx의 결제 상태(완료:999 or 실패:-1)를 바꾸는 함수
+    async updatePaymentEnd(paymentReceiptIdx, paymentStatus) {
         // 접근 db table name: payment_receipt_status_info
         // payment_receipt_status_info db table column: payment_receipt_idx[increment, pk], payment_status, payment_start_time, payment_end_time
     
@@ -170,17 +170,18 @@ const StatusInfoDB = {
             if (doc.exists) {
                 // 수정하려는 데이터가 존재한다면
                 await db.collection('payment_receipt_status_info').doc(String(paymentReceiptIdx)).update({
+                    payment_status: paymentStatus, // 결제 완료:999, 실패:-1
                     payment_end_time: new Date().toLocaleString()
                 });
-                console.log('결제 완료 시간 추가 성공');
+                console.log('updatePaymentEnd 실행 성공');
                 return 1; // 성공
             } else {
                 // 수정하려는 데이터가 존재하지 않는다면
-                console.log('수정하려는 데이터가 존재하지 않습니다.');
+                console.log('끝내려하는 결제 정보(paymentReceiptIdx)가 존재하지 않습니다.');
                 return -1; // 실패
             }
         } catch (error) {
-            console.error('결제 완료 시간 추가 실패:', error);
+            console.error('결제 종료 함수 실행 실패:', error);
             return -1; // 실패
         }
     },
@@ -211,4 +212,4 @@ const StatusInfoDB = {
     }
 };
 
-export {StatusInfoDB};
+export {statusInfoDB};

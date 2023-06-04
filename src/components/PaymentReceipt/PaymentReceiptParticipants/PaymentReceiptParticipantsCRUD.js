@@ -19,6 +19,7 @@
 import { db } from '../../../services/firebaseAPI';
 
 const ParticipantsDB = {
+  
   async create(payment_receipt_idx, consumer_id, seller_id) {
     try {
       const doc = await db

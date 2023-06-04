@@ -109,7 +109,7 @@ const MultipleProductsInfoDB = {
         console.log('이미 데이터가 존재합니다.');
         return -1; // 실패
       } else {
-        // 입력한 PaymentReceiptIdx 값이 기존에 존재하는 PaymentReceiptIdx인지 확인
+        // 입력한 payment_receipt_idx, product_info_idx 값이 기존에 존재하는지 확인
         const isExist = await this.checkPaymentReceiptIdxAndProductInfoIdx(payment_receipt_idx, product_info_idx);
         if (isExist === 1) {
             // 둘다 존재한다면
@@ -154,6 +154,41 @@ const MultipleProductsInfoDB = {
       return null;
     }
   },
+
+  // payment_receipt_idx만 넣었을 때, 해당 payment_receipt_idx에 해당하는 모든 product_info_idx 데이터를 가져오는 함수
+  // dongyuBro/PaymentProcess에서 사용되는 함수
+  async readAllProductInfoIdx(i_payment_receipt_idx) {
+    // 접근 db table name: payment_receipt_multiple_products_info
+    // payment_receipt_multiple_products_info db table column: payment_receipt_idx[pk], product_info_idx[pk], num_of_product
+    
+    // payment_receipt_idx: 결제 영수증 식별 idx
+
+    try {
+      const querySnapshot = await db.collection('payment_receipt_multiple_products_info').get();
+  
+      const productInfoDatas = {};
+
+      querySnapshot.forEach((doc) => {
+      const docName = doc.id;
+      const data = doc.data();
+
+      // 문서 이름을 파싱하여 원하는 데이터 추출
+      const parts = docName.split('_');
+      const payment_receipt_idx = parts[0];
+      const product_info_idx = parts[3];
+
+      if (i_payment_receipt_idx === payment_receipt_idx) {
+        productInfoDatas[product_info_idx] = data.product_won_price_per;
+      }
+    });
+
+      return productInfoDatas;
+    } catch (error) {
+      console.error('데이터 읽기 실패:', error);
+      return null;
+    }
+  },
+
 
   async update_num_of_product(payment_receipt_idx, product_info_idx, modified_num_of_product) {
     try {

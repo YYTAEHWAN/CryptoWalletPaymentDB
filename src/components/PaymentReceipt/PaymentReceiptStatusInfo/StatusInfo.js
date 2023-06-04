@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {StatusInfoDB} from './PaymentReceiptStatusInfoCRUD';
+import {statusInfoDB} from './PaymentReceiptStatusInfoCRUD';
 
 function StatusInfo() {
   const [paymentReceiptIdx, setPaymentReceiptIdx] = useState('');
@@ -9,14 +9,14 @@ function StatusInfo() {
 
   // 결제 영수증 상태 정보를 생성하는 함수
   const createStatusInfo = async () => {
-    const docId = await StatusInfoDB.create();
+    const docId = await statusInfoDB.create();
     console.log('새로운 결제 영수증 식별자:', docId);
     setPaymentReceiptIdx(docId);
   };
 
   // 결제 영수증 상태 정보를 읽어오는 함수
   const readStatusInfo = async () => {
-    const result = await StatusInfoDB.read(paymentReceiptIdx);
+    const result = await statusInfoDB.read(paymentReceiptIdx);
     if (result) {
       setPaymentStatus(result.payment_status);
       setPaymentStartTime(result.payment_start_time);
@@ -30,23 +30,23 @@ function StatusInfo() {
   };
 
   const updateStatusInfo = async () => {
-    await StatusInfoDB.updateOnlyStatus(paymentReceiptIdx, paymentStatus);
+    await statusInfoDB.updateOnlyStatus(paymentReceiptIdx, paymentStatus);
     console.log('데이터 수정 완료');
   };
 
   const updateStartTime = async () => {
-    await StatusInfoDB.updateTime(paymentReceiptIdx, paymentStartTime, paymentEndTime);
+    await statusInfoDB.updateTime(paymentReceiptIdx, paymentStartTime, paymentEndTime);
     console.log('시작 시간 수정 완료');
   };
 
   const updateEndTime = async () => {
-    await StatusInfoDB.updateEndTime(paymentReceiptIdx);
+    await statusInfoDB.updateEndTime(paymentReceiptIdx);
     console.log('종료 시간 수정 완료');
   };
 
   // 결제 영수증 상태 정보를 삭제하는 함수
   const deleteStatusInfo = async () => {
-    await StatusInfoDB.delete(paymentReceiptIdx);
+    await statusInfoDB.delete(paymentReceiptIdx);
     console.log('데이터 삭제 완료');
     setPaymentReceiptIdx('');
     setPaymentStatus('');

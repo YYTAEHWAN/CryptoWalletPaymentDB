@@ -70,7 +70,7 @@ import {sellerProductsDB} from '../../../../components/User/SellerData/Product/S
 
 // 실제 함수들 시작
 
-const getSellerProductInfoIdx = async (sellerId) => {
+const getSellerProductInfoIdxList = async (sellerId) => {
     try {
       const querySnapshot = await db
         .collection("seller_products")
@@ -131,7 +131,7 @@ function saveProductDataSentBySeller(seller_id, product_datas) {
     // seller_id : 판매자 아이디
 
     // isExist = 1 존재, isExist = 0 존재하지 않음
-    const productInfoIdxList = getSellerProductInfoIdx(seller_id);
+    const productInfoIdxList = getSellerProductInfoIdxList(seller_id);
 
     // 해당 productInfoIdxList 리스트의 product_name 값을 모두 가져와서 product_name_list에 저장한 뒤
     // product_name_list에 입력한 product_datas.product_name 이 존재하는지 확인
@@ -211,7 +211,9 @@ function makePayment(products, seller_id) {
 
     // input_networkInfo : 네트워크 정보 -> 맨 나중에 넣으면 돼서 삭제
     // priceAddressInfo : 가격과 주소 정보 
-    // products : 제품 정보
+    // products : 여러 제품의 정보들
+    // products = [product1, product2, ...]
+    // product1 = {product_name, product_won_price_per, num_of_product}
 
     const result = -1; // -1로 초기화
     // 웹 -> 서버
