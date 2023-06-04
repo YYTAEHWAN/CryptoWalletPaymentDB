@@ -35,14 +35,14 @@
 // ];
 
 import { db } from '../../../services/firebaseAPI';
-import {StatusInfoDB} from '../PaymentReceiptStatusInfo/PaymentReceiptStatusInfoCRUD';
+import {statusInfoDB} from '../PaymentReceiptStatusInfo/PaymentReceiptStatusInfoCRUD';
 import {productInfoDB} from '../../User/SellerData/Product/ProductInfo/ProductInfoCRUD';
 
 const MultipleProductsInfoDB = {
     // 입력한 PaymentReceiptIdx 값이 기존에 존재하는 PaymentReceiptIdx인지 확인하는 함수
     async checkPaymentReceiptIdx(payment_receipt_idx) {
         try {
-            const doc = await StatusInfoDB
+            const doc = await statusInfoDB
                 .read(payment_receipt_idx);
             if (doc) {
                 return 1; // 성공
@@ -157,7 +157,7 @@ const MultipleProductsInfoDB = {
 
   // payment_receipt_idx만 넣었을 때, 해당 payment_receipt_idx에 해당하는 모든 product_info_idx 데이터를 가져오는 함수
   // dongyuBro/PaymentProcess에서 사용되는 함수
-  async readAllProductInfoIdx(i_payment_receipt_idx) {
+  async readAllProductInfoIdxAndQuantity(i_payment_receipt_idx) {
     // 접근 db table name: payment_receipt_multiple_products_info
     // payment_receipt_multiple_products_info db table column: payment_receipt_idx[pk], product_info_idx[pk], num_of_product
     
@@ -178,7 +178,7 @@ const MultipleProductsInfoDB = {
       const product_info_idx = parts[3];
 
       if (i_payment_receipt_idx === payment_receipt_idx) {
-        productInfoDatas[product_info_idx] = data.product_won_price_per;
+        productInfoDatas[product_info_idx] = data.quantity;
       }
     });
 
