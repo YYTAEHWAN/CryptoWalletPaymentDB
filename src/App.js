@@ -14,6 +14,12 @@ import WalletAboutPage from './components/BroFunctions/SangyunBro/WalletOne/Wall
 import ChosenWalletPage from './components/BroFunctions/SangyunBro/WalletTwo/ChosenWalletPage';
 import ManageBcFuncsPage from './components/BroFunctions/SangyunBro/BlockchainOne/ManageBcFuncsPage';
 import ModifyBcFuncsPage from './components/BroFunctions/SangyunBro/BlockchainTwo/ModifyBcFuncsPage';
+import LoginReturnDataFuncPage from './components/BroFunctions/DongyuBro/LoginReturnData/LoginReturnDataFuncPage';
+import StatusInfoPage from './components/PaymentReceipt/PaymentReceiptStatusInfo/StatusInfoPage';
+import PriceAddressInfoPage from './components/PaymentReceipt/PaymentReceiptPriceAddressInfo/PriceAddressInfoPage';
+import ParticipantsPage from './components/PaymentReceipt/PaymentReceiptParticipants/ParticipantsPage';
+import NetworkInfoPage from './components/PaymentReceipt/PaymentReceiptNetworkInfo/NetworkInfoPage';
+import MultipleProductsInfoPage from './components/PaymentReceipt/PaymentReceiptMultipleProductsInfo/MultipleProductsInfoPage';
 
 function App() {
   return (
@@ -34,6 +40,14 @@ function App() {
           <Route path="ChosenWalletPage" element={<ChosenWalletPage />} />
           <Route path="ManageBcFuncsPage" element={<ManageBcFuncsPage />} />
           <Route path="ModifyBcFuncsPage" element={<ModifyBcFuncsPage />} />
+          <Route path="LoginReturnDataFuncPage" element={<LoginReturnDataFuncPage />} />
+          <Route path="StatusInfoPage" element={<StatusInfoPage />} />
+          <Route path="PriceAddressInfoPage" element={<PriceAddressInfoPage />} />
+          <Route path="ParticipantsPage" element={<ParticipantsPage />} />
+          <Route path="NetworkInfoPage" element={<NetworkInfoPage />} />
+          <Route path="MultipleProductsInfoPage" element={<MultipleProductsInfoPage />} />
+
+
         </Routes>
       </BrowserRouter>
     </div>
