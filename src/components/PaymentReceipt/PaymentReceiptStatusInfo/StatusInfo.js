@@ -40,7 +40,7 @@ function StatusInfo() {
   };
 
   const updateEndTime = async () => {
-    await statusInfoDB.updateEndTime(paymentReceiptIdx, paymentStatus);
+    await statusInfoDB.updatePaymentEnd(paymentReceiptIdx, paymentStatus);
     console.log('종료 시간 수정 완료');
   };
 
