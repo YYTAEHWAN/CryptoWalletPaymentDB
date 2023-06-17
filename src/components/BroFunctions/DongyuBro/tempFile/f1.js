@@ -65,7 +65,7 @@ let products = [
 
 
 import {db} from '../../../../services/firebase.js';
-import {productInfoDB} from '../../../../components/User/SellerData/Product/ProductInfo/ProductInfoCRUD.js';
+import {productInfoDB} from '../../../User/SellerData/Product/ProductInfo/ProductInfoCRUD.js';
 import {sellerProductsDB} from '../../../../components/User/SellerData/Product/SellerProducts/SellerProductsCRUD.js';
 
 // 실제 함수들 시작

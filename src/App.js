@@ -20,6 +20,9 @@ import PriceAddressInfoPage from './components/PaymentReceipt/PaymentReceiptPric
 import ParticipantsPage from './components/PaymentReceipt/PaymentReceiptParticipants/ParticipantsPage';
 import NetworkInfoPage from './components/PaymentReceipt/PaymentReceiptNetworkInfo/NetworkInfoPage';
 import MultipleProductsInfoPage from './components/PaymentReceipt/PaymentReceiptMultipleProductsInfo/MultipleProductsInfoPage';
+import PaymentProcessPage from './components/BroFunctions/DongyuBro/PaymentProcess/PaymentProcessPage';
+
+
 
 function App() {
   return (
@@ -46,6 +49,8 @@ function App() {
           <Route path="ParticipantsPage" element={<ParticipantsPage />} />
           <Route path="NetworkInfoPage" element={<NetworkInfoPage />} />
           <Route path="MultipleProductsInfoPage" element={<MultipleProductsInfoPage />} />
+          <Route path="PaymentProcessPage" element={<PaymentProcessPage />} />
+          
 
 
         </Routes>

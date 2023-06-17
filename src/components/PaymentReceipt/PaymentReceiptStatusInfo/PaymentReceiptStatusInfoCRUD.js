@@ -4,7 +4,7 @@ import { db } from '../../../services/firebaseAPI';
 //     // 결제 영수증 식별 idx 칼럼
 //     payment_receipt_idx int [increment, pk]
   
-//     // 해당 영수증이 발행된 후 상태가 "테이블 만드는 중(0)" 인지 "결제 중(1)" 인지
+//     // 해당 영수증이 발행된 후 상태가 "테이블 만드는 중(0)" 인지 "결제 중(1)" 인지, // 결제 전 관련 테이블 모두 완성 상태 번호 = "0011"
 //     // 아니면 "결제 완료(999)" 인지, "환불 요청(2)" 인지, "환불 완료(3)" 인지, "결제 실패(-1)" 인지
 //     // 처럼 결제의 상태를 알려주는 payment_status 칼럼
 //     payment_status varchar
@@ -22,15 +22,13 @@ const statusInfoDB = {
     
         // paymentReceiptIdx: 결제 영수증 식별 idx - 자동 생성
 
-        // 해당 영수증이 발행된 후 상태가 "테이블 만드는 중(0)" 인지 "결제 중(1)" 인지
+        // 해당 영수증이 발행된 후 상태가 "테이블 만드는 중(0)" 인지 "결제 중(1)" 인지, // 결제 전 관련 테이블 모두 완성 상태 번호 = "0011"
         // 아니면 "결제 완료(999)" 인지, "환불 요청(2)" 인지, "환불 완료(3)" 인지, "결제 실패(-1)" 인지
         // paymentStatus: 결제 상태 이건 당연히 0에서부터 시작
 
         // paymentStartTime: 결제 시작 시점 - 자연생성
         // paymentEndTime: 결제 완료 시점 - 나중 첨가
 
-        
-        
         try {
             
             const statusInfoRef = db.collection("payment_receipt_status_info");

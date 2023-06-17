@@ -43,7 +43,7 @@ import { db } from '../../../services/firebaseAPI';
 const PriceAddressInfoDB = {
 
     // payment_receipt_price_address_info 데이터 생성하는 함수
-    async create(payment_receipt_idx, total_coin_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address) {
+    async create(payment_receipt_idx, total_coin_price, total_won_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address) {
         // 접근 db table name: payment_receipt_price_address_info
         // payment_receipt_price_address_info db table column: payment_receipt_idx[pk], total_coin_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address
 
@@ -57,6 +57,7 @@ const PriceAddressInfoDB = {
         const data = {
             payment_receipt_idx,
             total_coin_price,
+            total_won_price,    
             sender_consumer_id,
             receiver_seller_id,
             sender_wallet_address,
@@ -71,7 +72,17 @@ const PriceAddressInfoDB = {
                 return -1; // 실패
             } else {
                 // payment_receipt_price_address_info 컬렉션에 새로운 문서 생성
-                await db.collection('payment_receipt_price_address_info').doc(String(payment_receipt_idx)).set(data);
+                await db.collection('payment_receipt_price_address_info')
+                .doc(String(payment_receipt_idx))
+                .set({
+                    payment_receipt_idx : data.payment_receipt_idx,
+                    total_coin_price : data.total_coin_price,
+                    total_won_price : data.total_won_price,
+                    sender_consumer_id : data.sender_consumer_id,
+                    receiver_seller_id : data.receiver_seller_id,
+                    sender_wallet_address : data.sender_wallet_address,
+                    receiver_wallet_address : data.receiver_wallet_address
+                });
                 return 1; // 성공
             }
         } catch (error) {
@@ -93,7 +104,7 @@ const PriceAddressInfoDB = {
 
             if (doc.exists) {
                 const resultObject = doc.data();
-                return resultObject; // { total_coin_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address }
+                return resultObject; // { payment_receipt_idx, total_coin_price, total_won_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address }
             } else {
                 console.log('해당 데이터가 없습니다.');
                 return null;
@@ -105,7 +116,7 @@ const PriceAddressInfoDB = {
     },
 
     // payment_receipt_price_address_info 데이터 수정하는 함수
-    async update(payment_receipt_idx, total_coin_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address) {
+    async update(payment_receipt_idx, total_coin_price, total_won_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address) {
         // 접근 db table name: payment_receipt_price_address_info
         // payment_receipt_price_address_info db table column: payment_receipt_idx[pk], total_coin_price, sender_consumer_id, receiver_seller_id, sender_wallet_address, receiver_wallet_address
 
@@ -117,7 +128,9 @@ const PriceAddressInfoDB = {
         // receiver_wallet_address : 수신자 지갑 주소
 
         const data = {
+            payment_receipt_idx,
             total_coin_price,
+            total_won_price,
             sender_consumer_id,
             receiver_seller_id,
             sender_wallet_address,
@@ -129,12 +142,23 @@ const PriceAddressInfoDB = {
 
             if (doc.exists) {
                 // 수정하려는 데이터가 존재한다면
-                await db.collection('payment_receipt_price_address_info').doc(String(payment_receipt_idx)).update(data);
+                await db.collection('payment_receipt_price_address_info')
+                .doc(String(payment_receipt_idx))
+                .update({
+                    payment_receipt_idx : data.payment_receipt_idx,
+                    total_coin_price : data.total_coin_price,
+                    total_won_price : data.total_won_price,
+                    sender_consumer_id : data.sender_consumer_id,
+                    receiver_seller_id : data.receiver_seller_id,
+                    sender_wallet_address : data.sender_wallet_address,
+                    receiver_wallet_address : data.receiver_wallet_address
+                });
                 console.log('데이터 수정 성공');
                 return 1; // 성공
             } else {
                 // 수정하려는 데이터가 존재하지 않는다면
                 console.log('수정하려는 데이터가 존재하지 않습니다.');
+                console.log("PriceAddressInfoDB.update 실패");
                 return -1; // 실패
             }
         } catch (error) {

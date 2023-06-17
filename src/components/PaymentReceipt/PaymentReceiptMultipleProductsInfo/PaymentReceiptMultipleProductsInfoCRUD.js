@@ -7,7 +7,7 @@
 //       product_info_idx int [pk]
   
 //     // 몇 개?
-//     num_of_product int
+//     quantity int
 //   }
   
 
@@ -25,12 +25,12 @@
 //     {
 //         payment_receipt_idx: 1,
 //         product_info_idx: 1,
-//         num_of_product: 2
+//         quantity: 2
 //     },
 //     {
 //         payment_receipt_idx: 1,
 //         product_info_idx: 2,
-//         num_of_product: 3
+//         quantity: 3
 //     }
 // ];
 
@@ -59,14 +59,16 @@ const MultipleProductsInfoDB = {
     // 입력한 product_info_idx 값이 기존에 존재하는 product_info_idx인지 확인하는 함수
     async checkProductInfoIdx(product_info_idx) {
         try {
-            const doc = await productInfoDB
-                .collection('product_info')
-                .doc(String(product_info_idx))
-                .get();
-            if (doc.exists) {
+            // 오류가 있었어서 잠시 주석 달아놓음
+            // const docName = `product_info_idx${product_info_idx}`
+            // console.log("docName : ", docName);
+            const doc = await productInfoDB.readProductInfo(product_info_idx);
+            // console.log("doc : ", doc)
+            // console.log("doc.exists : ", doc.exists)
+            if (doc) {
                 return 1; // 성공
             } else {
-                console.log('입력하신 product_info_idx에 해당 데이터가 없습니다.');
+                console.log('입력하신 product_info_idx에 해당하는 데이터가 없습니다.(null)');
                 return -1; // 실패
             }
         } catch (error) {
@@ -84,7 +86,7 @@ const MultipleProductsInfoDB = {
             }
             const productInfoIdxCheck = await this.checkProductInfoIdx(product_info_idx);
             if(productInfoIdxCheck === -1) {
-                console.log('입력하신 product_info_idx에 해당 데이터가 없습니다.');
+                console.log('입력하신 product_info_idx에 해당하는 데이터가 없습니다.');
                 return -1; // 실패(해당 product_info_idx가 존재하지 않음
             }
             return 1; // 성공
@@ -98,7 +100,7 @@ const MultipleProductsInfoDB = {
 
 
 
-  async create(payment_receipt_idx, product_info_idx, num_of_product) {
+  async create(payment_receipt_idx, product_info_idx, quantity) {
     try {
       const doc = await db
         .collection('payment_receipt_multiple_products_info')
@@ -119,7 +121,7 @@ const MultipleProductsInfoDB = {
               .set({
                 payment_receipt_idx,
                 product_info_idx,
-                num_of_product,
+                quantity,
               });
             return 1; // 성공
         }
@@ -159,7 +161,7 @@ const MultipleProductsInfoDB = {
   // dongyuBro/PaymentProcess에서 사용되는 함수
   async readAllProductInfoIdxAndQuantity(i_payment_receipt_idx) {
     // 접근 db table name: payment_receipt_multiple_products_info
-    // payment_receipt_multiple_products_info db table column: payment_receipt_idx[pk], product_info_idx[pk], num_of_product
+    // payment_receipt_multiple_products_info db table column: payment_receipt_idx[pk], product_info_idx[pk], quantity
     
     // payment_receipt_idx: 결제 영수증 식별 idx
 
@@ -169,28 +171,30 @@ const MultipleProductsInfoDB = {
       const productInfoDatas = {};
 
       querySnapshot.forEach((doc) => {
-      const docName = doc.id;
-      const data = doc.data();
+        const docName = doc.id;
+        const data = doc.data();
 
-      // 문서 이름을 파싱하여 원하는 데이터 추출
-      const parts = docName.split('_');
-      const payment_receipt_idx = parts[0];
-      const product_info_idx = parts[3];
+        // 문서 이름을 파싱하여 원하는 데이터 추출
+        const parts = docName.split('_'); // 예시 : 1_product_info_idx_1 -> "1", "product", "info", "idx", "1"
+        const payment_receipt_idx = parts[0]; // "1"
+        const product_info_idx = parts[4];
 
-      if (i_payment_receipt_idx === payment_receipt_idx) {
-        productInfoDatas[product_info_idx] = data.quantity;
-      }
-    });
+        if (String(i_payment_receipt_idx) === String(payment_receipt_idx)) {
+          productInfoDatas[product_info_idx] = data.quantity;
+        }
+      });
+    
 
       return productInfoDatas;
     } catch (error) {
       console.error('데이터 읽기 실패:', error);
+      console.log("--readAllProductInfoIdxAndQuantity 비정상 종료--");
       return null;
     }
   },
 
 
-  async update_num_of_product(payment_receipt_idx, product_info_idx, modified_num_of_product) {
+  async update_quantity(payment_receipt_idx, product_info_idx, modified_quantity) {
     try {
       const doc = await db
         .collection('payment_receipt_multiple_products_info')
@@ -202,7 +206,7 @@ const MultipleProductsInfoDB = {
           .collection('payment_receipt_multiple_products_info')
           .doc(`${payment_receipt_idx}_product_info_idx_${product_info_idx}`)
           .update({
-            quantity: modified_num_of_product,
+            quantity: modified_quantity,
           });
         console.log('데이터 수정 성공');
         return 1; // 성공

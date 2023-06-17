@@ -48,10 +48,11 @@ const NetworkInfoDB = {
           .collection('payment_receipt_network_info')
           .doc(String(payment_receipt_idx))
           .set({
-            payment_wallet_name,
-            main_blockchain_name,
-            detailed_network_name,
-            detailed_network_id,
+            payment_receipt_idx : payment_receipt_idx,
+            payment_wallet_name : payment_wallet_name,
+            main_blockchain_name : main_blockchain_name,
+            detailed_network_name : detailed_network_name,
+            detailed_network_id : detailed_network_id,
           });
         return 1; // 성공
       }
@@ -93,15 +94,17 @@ const NetworkInfoDB = {
           .collection('payment_receipt_network_info')
           .doc(String(payment_receipt_idx))
           .update({
-            payment_wallet_name,
-            main_blockchain_name,
-            detailed_network_name,
-            detailed_network_id,
+            payment_receipt_idx : payment_receipt_idx,
+            payment_wallet_name : payment_wallet_name,
+            main_blockchain_name : main_blockchain_name,
+            detailed_network_name : detailed_network_name,
+            detailed_network_id : detailed_network_id,
           });
         console.log('데이터 수정 성공');
         return 1; // 성공
       } else {
         console.log('수정하려는 데이터가 존재하지 않습니다.');
+        console.log("NetworkInfoDB.update 실패");
         return -1; // 실패
       }
     } catch (error) {
